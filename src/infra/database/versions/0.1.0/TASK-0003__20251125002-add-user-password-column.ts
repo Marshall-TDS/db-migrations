@@ -6,7 +6,7 @@ export const addUserPasswordColumn20251125002: Migration = {
   async up({ db }) {
     await db.execute(`
       ALTER TABLE users
-      ADD COLUMN IF NOT EXISTS password TEXT;
+      ADD COLUMN IF NOT EXISTS password VARCHAR(255) DEFAULT NULL;
     `)
   },
   async down({ db }) {
