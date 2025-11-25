@@ -1,9 +1,9 @@
 import { readdir } from 'fs/promises'
 import path from 'path'
-import { pathToFileURL } from 'url'
 import type { Migration } from './Migration'
 
 const versionsDir = path.resolve(__dirname, '../versions')
+const sourceExtension = path.extname(__filename) || '.js'
 
 export const loadMigrations = async (): Promise<Migration[]> => {
   const dirEntries = await readdir(versionsDir, { withFileTypes: true }).catch(() => [])
@@ -11,11 +11,11 @@ export const loadMigrations = async (): Promise<Migration[]> => {
 
   const migrationsPerVersion = await Promise.all(
     versionDirs.map(async (versionDir) => {
-      const migrationIndex = path.join(versionsDir, versionDir.name, 'index.ts')
+      const migrationIndex = path.join(versionsDir, versionDir.name, `index${sourceExtension}`)
       try {
-        const moduleUrl = pathToFileURL(migrationIndex).href
-        const module = await import(moduleUrl)
-        return (module.migrations ?? []) as Migration[]
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const module = require(migrationIndex) as { migrations?: Migration[] }
+        return module.migrations ?? []
       } catch (error) {
         console.warn(`[MigrationLoader] Falha ao carregar version ${versionDir.name}:`, error)
         return []

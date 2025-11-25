@@ -7,5 +7,12 @@ export const env = {
   app: {
     port: Number(process.env.PORT ?? 3444),
   },
+  database: {
+    host: process.env.DB_HOST ?? 'localhost',
+    port: Number(process.env.DB_PORT ?? 5432),
+    name: process.env.DB_NAME ?? 'marshall',
+    user: process.env.DB_USER ?? 'developer',
+    password: process.env.DB_PASS ?? '',
+  },
 }
 

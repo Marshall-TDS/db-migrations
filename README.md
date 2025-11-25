@@ -7,6 +7,7 @@ Serviço dedicado a versionar o banco de dados de forma independente das APIs de
 - TypeScript 5
 - Express 5
 - Zod para validações
+- Swagger/OpenAPI para documentação
 
 ### Scripts
 - `npm run dev` — executa a API com reload automático
@@ -20,6 +21,8 @@ src
 ├── app.ts                         # Configuração do Express
 ├── config/env.ts                  # Variáveis de ambiente
 ├── core                           # AppError + middlewares globais
+├── docs/
+│   └── swagger.ts                 # Configuração do Swagger/OpenAPI
 ├── infra/database
 │   ├── connection.ts              # Client único (alterar aqui para Postgres etc.)
 │   ├── migrations/                # Contratos, loader e runner
@@ -55,5 +58,13 @@ npm run dev
 http POST :3444/api/migrations/run direction=up
 ```
 
+API disponível em `http://localhost:3444/api`.
+
+### Documentação Swagger
+- Acesse `http://localhost:3444/docs` após subir o servidor (`npm run dev`).
+- Endpoint base configurado como `http://localhost:3444/api`.
+- Inclui documentação completa dos endpoints de health-check e execução de migrations, com exemplos de requisições e respostas.
+
+### Notas
 O client real do banco deve ser implementado em `src/infra/database/connection.ts`. Basta substituir o `FakeDatabaseClient` por Prisma/Knex/pg, mantendo o restante intacto.
 
