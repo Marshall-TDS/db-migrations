@@ -5,8 +5,11 @@ import { addUserPasswordColumn20251125002 } from './TASK-0003__20251125002-add-u
 import { createRemetentesAndComunicacoesTables20250102001 } from './TASK-0004__20250102001-create-remetentes-and-comunicacoes-tables'
 import { addAssuntoHtmlToComunicacoes20250102002 } from './TASK-0005__20250102002-add-assunto-html-to-comunicacoes'
 
+import { ajusteSeqId20251202001 } from './TASK-0006__20251202-ajuste-seq_id'
+
 export const migrations: Migration[] = [
   createRemetentesAndComunicacoesTables20250102001,
   addAssuntoHtmlToComunicacoes20250102002,
+  ajusteSeqId20251202001,
 ]
 
