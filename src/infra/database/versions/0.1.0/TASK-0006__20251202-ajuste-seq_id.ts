@@ -15,7 +15,13 @@ export const ajusteSeqId20251202001: Migration = {
         // access_group_memberships
         // Renomear id atual (BIGSERIAL) para seq_id
         await db.execute(`
-      ALTER TABLE access_group_memberships RENAME COLUMN id TO seq_id;
+      DO $$
+      BEGIN
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'access_group_memberships' AND column_name = 'id' AND table_schema = 'public') 
+           AND NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'access_group_memberships' AND column_name = 'seq_id' AND table_schema = 'public') THEN
+            ALTER TABLE access_group_memberships RENAME COLUMN id TO seq_id;
+        END IF;
+      END $$;
     `)
 
         // Remover constraint de chave primária antiga (pode estar com nome antigo ou novo)
@@ -33,7 +39,7 @@ export const ajusteSeqId20251202001: Migration = {
 
         // Adicionar novo id UUID
         await db.execute(`
-      ALTER TABLE access_group_memberships ADD COLUMN id UUID DEFAULT gen_random_uuid() NOT NULL;
+      ALTER TABLE access_group_memberships ADD COLUMN IF NOT EXISTS id UUID DEFAULT gen_random_uuid() NOT NULL;
     `)
 
         // Definir novo id como Primary Key

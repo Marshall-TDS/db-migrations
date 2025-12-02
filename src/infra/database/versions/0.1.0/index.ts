@@ -6,10 +6,12 @@ import { createRemetentesAndComunicacoesTables20250102001 } from './TASK-0004__2
 import { addAssuntoHtmlToComunicacoes20250102002 } from './TASK-0005__20250102002-add-assunto-html-to-comunicacoes'
 
 import { ajusteSeqId20251202001 } from './TASK-0006__20251202-ajuste-seq_id'
+import { createSystemAuditLog20251202002 } from './TASK-0007__20251202-create-system-audit-log'
 
 export const migrations: Migration[] = [
   createRemetentesAndComunicacoesTables20250102001,
   addAssuntoHtmlToComunicacoes20250102002,
   ajusteSeqId20251202001,
+  createSystemAuditLog20251202002,
 ]
 
