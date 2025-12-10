@@ -22,7 +22,15 @@ export const fixDocumentFileType20251209002: Migration = {
     async down({ db }) {
         // Revert is best effort
         await db.execute(`
+            -- Revert file type (best effort)
             ALTER TABLE public.customer_documents ALTER COLUMN file TYPE VARCHAR(255) USING encode(file, 'escape');
+
+            -- Fill possible NULLs before setting NOT NULL
+            UPDATE public.customer_documents SET rejection_reason = '' WHERE rejection_reason IS NULL;
+            UPDATE public.customer_documents SET expiration_date = CURRENT_DATE WHERE expiration_date IS NULL;
+            UPDATE public.customer_documents SET document_internal_data = '{}'::jsonb WHERE document_internal_data IS NULL;
+
+            -- Re-apply NOT NULL constraints
             ALTER TABLE public.customer_documents ALTER COLUMN rejection_reason SET NOT NULL;
             ALTER TABLE public.customer_documents ALTER COLUMN expiration_date SET NOT NULL;
             ALTER TABLE public.customer_documents ALTER COLUMN document_internal_data SET NOT NULL;

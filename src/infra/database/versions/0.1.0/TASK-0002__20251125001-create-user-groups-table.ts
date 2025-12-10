@@ -30,6 +30,16 @@ export const createUserGroupsTable20251125001: Migration = {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         UNIQUE (user_id, group_id)
       );
+
+      DROP TRIGGER IF EXISTS trg_audit_log ON public.user_groups;
+      CREATE TRIGGER trg_audit_log
+      AFTER INSERT OR UPDATE OR DELETE ON public.user_groups
+      FOR EACH ROW EXECUTE FUNCTION public.fn_audit_trigger();
+
+      DROP TRIGGER IF EXISTS trg_audit_log ON public.user_group_memberships;
+      CREATE TRIGGER trg_audit_log
+      AFTER INSERT OR UPDATE OR DELETE ON public.user_group_memberships
+      FOR EACH ROW EXECUTE FUNCTION public.fn_audit_trigger();
     `)
   },
   async down({ db }) {

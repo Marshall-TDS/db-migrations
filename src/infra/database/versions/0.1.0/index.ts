@@ -1,4 +1,5 @@
 import type { Migration } from '../../migrations/Migration'
+import { setupAuditLog20250101000 } from './TASK-0000__20250101000-setup-audit-log'
 import { createUsersTable20250101001 } from './TASK-0001__20250101001-create-users-table'
 import { createUserGroupsTable20251125001 } from './TASK-0002__20251125001-create-user-groups-table'
 import { refactorAccessGroups20251126001 } from './TASK-0002__20251126001-rename-user-group'
@@ -11,6 +12,7 @@ import { fixDocumentFileType20251209002 } from './TASK-0022__20251209-fix-docume
 import { addDocumentMetadataColumns20251209003 } from './TASK-0023__20251209-add-doc-metadata'
 
 export const migrations: Migration[] = [
+  setupAuditLog20250101000,
   createUsersTable20250101001,
   createUserGroupsTable20251125001,
   refactorAccessGroups20251126001,

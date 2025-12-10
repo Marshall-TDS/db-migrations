@@ -50,6 +50,19 @@ export const createRemetentesAndComunicacoesTables20250102001: Migration = {
     await db.execute(`
       CREATE INDEX IF NOT EXISTS idx_comunicacoes_remetente_id ON comunicacoes(remetente_id);
     `)
+
+    // Apply audit triggers
+    await db.execute(`
+      DROP TRIGGER IF EXISTS trg_audit_log ON public.remetentes;
+      CREATE TRIGGER trg_audit_log
+      AFTER INSERT OR UPDATE OR DELETE ON public.remetentes
+      FOR EACH ROW EXECUTE FUNCTION public.fn_audit_trigger();
+
+      DROP TRIGGER IF EXISTS trg_audit_log ON public.comunicacoes;
+      CREATE TRIGGER trg_audit_log
+      AFTER INSERT OR UPDATE OR DELETE ON public.comunicacoes
+      FOR EACH ROW EXECUTE FUNCTION public.fn_audit_trigger();
+    `)
   },
   async down({ db }) {
     await db.execute('DROP TABLE IF EXISTS comunicacoes;')

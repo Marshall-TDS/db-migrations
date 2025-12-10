@@ -18,6 +18,11 @@ export const createUsersTable20250101001: Migration = {
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
         updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
       );
+
+      DROP TRIGGER IF EXISTS trg_audit_log ON public.users;
+      CREATE TRIGGER trg_audit_log
+      AFTER INSERT OR UPDATE OR DELETE ON public.users
+      FOR EACH ROW EXECUTE FUNCTION public.fn_audit_trigger();
     `)
   },
   async down({ db }) {
