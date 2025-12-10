@@ -46,7 +46,7 @@ export const createUserGroupsTable20251125001: Migration = {
     await db.execute(`
       DROP TABLE IF EXISTS user_group_memberships;
       DROP TABLE IF EXISTS user_groups;
-      ALTER TABLE users
+      ALTER TABLE IF EXISTS users
         ADD COLUMN IF NOT EXISTS user_group TEXT[] NOT NULL DEFAULT '{}';
     `)
   },
