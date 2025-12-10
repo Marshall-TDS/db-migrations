@@ -12,6 +12,7 @@ import { fixDocumentFileType20251209002 } from './TASK-0022__20251209-fix-docume
 import { addDocumentMetadataColumns20251209003 } from './TASK-0023__20251209-add-doc-metadata'
 import { updateAccessGroupMembershipsId20251210001 } from './TASK-0024__20251210001-access-group-memberships-id-update'
 import { addSeqIdToUsers20251210002 } from './TASK-0025__20251210002-add-seq-id-to-users'
+import { createProfitabilityModalityTable20251210003 } from './TASK-0026__20251210003-create-profitability-modality-table'
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -26,5 +27,6 @@ export const migrations: Migration[] = [
   addDocumentMetadataColumns20251209003,
   updateAccessGroupMembershipsId20251210001,
   addSeqIdToUsers20251210002,
+  createProfitabilityModalityTable20251210003,
 ]
 
