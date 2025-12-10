@@ -7,7 +7,7 @@ export const createUserGroupsTable20251125001: Migration = {
     await db.execute(`
       CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-      CREATE TABLE user_groups (
+      CREATE TABLE IF NOT EXISTS user_groups (
         seq_id BIGSERIAL PRIMARY KEY,
         id UUID NOT NULL DEFAULT gen_random_uuid(),
         name VARCHAR(160) NOT NULL,
@@ -23,7 +23,7 @@ export const createUserGroupsTable20251125001: Migration = {
       ALTER TABLE users
         DROP COLUMN IF EXISTS user_group;
 
-      CREATE TABLE user_group_memberships (
+      CREATE TABLE IF NOT EXISTS user_group_memberships (
         id BIGSERIAL PRIMARY KEY,
         user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         group_id UUID NOT NULL REFERENCES user_groups(id) ON DELETE CASCADE,

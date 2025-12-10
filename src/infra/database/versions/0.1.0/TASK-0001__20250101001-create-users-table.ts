@@ -5,7 +5,7 @@ export const createUsersTable20250101001: Migration = {
   name: 'create-users-table',
   async up({ db }) {
     await db.execute(`
-      CREATE TABLE users (
+      CREATE TABLE IF NOT EXISTS users (
         id UUID PRIMARY KEY,
         full_name VARCHAR(255) NOT NULL,
         login VARCHAR(80) NOT NULL UNIQUE,
