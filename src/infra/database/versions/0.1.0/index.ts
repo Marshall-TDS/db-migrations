@@ -13,6 +13,7 @@ import { addDocumentMetadataColumns20251209003 } from './TASK-0023__20251209-add
 import { updateAccessGroupMembershipsId20251210001 } from './TASK-0024__20251210001-access-group-memberships-id-update'
 import { addSeqIdToUsers20251210002 } from './TASK-0025__20251210002-add-seq-id-to-users'
 import { createProfitabilityModalityTable20251210003 } from './TASK-0026__20251210003-create-profitability-modality-table'
+import { createParameterizationTable20251210004 } from './TASK-0027__20251210004-create-parameterization-table'
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -28,5 +29,6 @@ export const migrations: Migration[] = [
   updateAccessGroupMembershipsId20251210001,
   addSeqIdToUsers20251210002,
   createProfitabilityModalityTable20251210003,
+  createParameterizationTable20251210004,
 ]
 
