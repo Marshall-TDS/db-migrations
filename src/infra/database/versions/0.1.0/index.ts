@@ -10,6 +10,8 @@ import { addAssuntoHtmlToComunicacoes20250102002 } from './TASK-0005__2025010200
 import { createCustomerTables20251204001 } from './TASK-0021__20251204-create-customer-tables'
 import { fixDocumentFileType20251209002 } from './TASK-0022__20251209-fix-document-file-type'
 import { addDocumentMetadataColumns20251209003 } from './TASK-0023__20251209-add-doc-metadata'
+import { updateAccessGroupMembershipsId20251210001 } from './TASK-0024__20251210001-access-group-memberships-id-update'
+import { addSeqIdToUsers20251210002 } from './TASK-0025__20251210002-add-seq-id-to-users'
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -22,5 +24,7 @@ export const migrations: Migration[] = [
   createCustomerTables20251204001,
   fixDocumentFileType20251209002,
   addDocumentMetadataColumns20251209003,
+  updateAccessGroupMembershipsId20251210001,
+  addSeqIdToUsers20251210002,
 ]
 
