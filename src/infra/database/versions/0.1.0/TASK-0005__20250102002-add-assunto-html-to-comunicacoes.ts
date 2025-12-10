@@ -44,13 +44,13 @@ export const addAssuntoHtmlToComunicacoes20250102002: Migration = {
   },
   async down({ db }) {
     await db.execute(`
-      ALTER TABLE comunicacoes
-      DROP COLUMN IF EXISTS html;
-    `)
-
-    await db.execute(`
-      ALTER TABLE comunicacoes
-      DROP COLUMN IF EXISTS assunto;
+      DO $$
+      BEGIN
+        IF EXISTS (SELECT FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'comunicacoes') THEN
+          ALTER TABLE comunicacoes DROP COLUMN IF EXISTS html;
+          ALTER TABLE comunicacoes DROP COLUMN IF EXISTS assunto;
+        END IF;
+      END $$;
     `)
   },
 }

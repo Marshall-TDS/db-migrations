@@ -12,8 +12,13 @@ export const addDocumentMetadataColumns20251209003: Migration = {
     },
     async down({ db }) {
         await db.execute(`
-            ALTER TABLE public.customer_documents DROP COLUMN IF EXISTS file_name;
-            ALTER TABLE public.customer_documents DROP COLUMN IF EXISTS file_size;
+            DO $$
+            BEGIN
+                IF EXISTS (SELECT FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'customer_documents') THEN
+                    ALTER TABLE public.customer_documents DROP COLUMN IF EXISTS file_name;
+                    ALTER TABLE public.customer_documents DROP COLUMN IF EXISTS file_size;
+                END IF;
+            END $$;
         `)
     },
 }

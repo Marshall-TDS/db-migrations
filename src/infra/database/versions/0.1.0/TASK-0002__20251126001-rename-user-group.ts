@@ -73,36 +73,53 @@ export const refactorAccessGroups20251126001: Migration = {
       DO $$
       BEGIN
         -- 1. Tables: Rename back to user_* first so constraints can be found on them
+        
+        -- Handle potential collision for memberships: Drop stale user_... if both exist
         IF EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'access_group_memberships')
-           AND NOT EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'user_group_memberships') THEN
+           AND EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'user_group_memberships') THEN
+             DROP TABLE user_group_memberships CASCADE;
+        END IF;
+
+        IF EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'access_group_memberships') THEN
           ALTER TABLE access_group_memberships RENAME TO user_group_memberships;
         END IF;
 
+        -- Handle potential collision for groups
         IF EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'access_groups')
-           AND NOT EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'user_groups') THEN
+           AND EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'user_groups') THEN
+             DROP TABLE user_groups CASCADE;
+        END IF;
+
+        IF EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'access_groups') THEN
           ALTER TABLE access_groups RENAME TO user_groups;
         END IF;
 
         -- 2. Constraints: Rename on the now-restored table names
         IF EXISTS (
-          SELECT 1 FROM pg_constraint 
-          WHERE conname = 'access_group_memberships_user_id_group_id_key'
+          SELECT 1 FROM pg_constraint c
+          JOIN pg_class t ON c.conrelid = t.oid
+          WHERE t.relname = 'user_group_memberships' 
+          AND c.conname = 'access_group_memberships_user_id_group_id_key'
         ) THEN
-          ALTER TABLE IF EXISTS user_group_memberships RENAME CONSTRAINT access_group_memberships_user_id_group_id_key TO user_group_memberships_user_id_group_id_key;
+          ALTER TABLE user_group_memberships RENAME CONSTRAINT access_group_memberships_user_id_group_id_key TO user_group_memberships_user_id_group_id_key;
         END IF;
 
         IF EXISTS (
-          SELECT 1 FROM pg_constraint 
-          WHERE conname = 'access_group_memberships_user_id_fkey'
+          SELECT 1 FROM pg_constraint c
+          JOIN pg_class t ON c.conrelid = t.oid
+          WHERE t.relname = 'user_group_memberships'
+          AND c.conname = 'access_group_memberships_user_id_fkey'
         ) THEN
-          ALTER TABLE IF EXISTS user_group_memberships RENAME CONSTRAINT access_group_memberships_user_id_fkey TO user_group_memberships_user_id_fkey;
+          ALTER TABLE user_group_memberships RENAME CONSTRAINT access_group_memberships_user_id_fkey TO user_group_memberships_user_id_fkey;
         END IF;
 
         IF EXISTS (
-          SELECT 1 FROM pg_constraint 
-          WHERE conname = 'access_group_memberships_group_id_fkey'
+          SELECT 1 FROM pg_constraint c
+          JOIN pg_class t ON c.conrelid = t.oid
+          WHERE t.relname = 'user_group_memberships'
+          AND c.conname = 'access_group_memberships_group_id_fkey'
         ) THEN
-          ALTER TABLE IF EXISTS user_group_memberships RENAME CONSTRAINT access_group_memberships_group_id_fkey TO user_group_memberships_group_id_fkey;
+          ALTER TABLE user_group_memberships RENAME CONSTRAINT access_group_memberships_group_id_fkey TO user_group_memberships_group_id_fkey;
         END IF;
 
         -- 3. Sequences
