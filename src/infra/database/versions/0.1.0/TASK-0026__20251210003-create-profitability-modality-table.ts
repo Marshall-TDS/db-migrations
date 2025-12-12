@@ -37,3 +37,7 @@ export const createProfitabilityModalityTable20251210003: Migration = {
         `);
   },
 };
+
+
+
+
