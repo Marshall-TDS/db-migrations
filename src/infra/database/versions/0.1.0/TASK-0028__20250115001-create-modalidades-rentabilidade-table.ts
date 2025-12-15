@@ -13,14 +13,13 @@ export const createModalidadesRentabilidadeTable20250115001: Migration = {
         codigo VARCHAR(100) NOT NULL,
         descricao VARCHAR(500),
         ativo BOOLEAN NOT NULL DEFAULT true,
-        created_by VARCHAR(160) NOT NULL,
-        updated_by VARCHAR(160) NOT NULL,
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+        created_by VARCHAR(160) NOT NULL,
+        updated_by VARCHAR(160) NOT NULL
       );
       
       CREATE UNIQUE INDEX IF NOT EXISTS idx_profitability_modality_seq_id ON public.profitability_modality(seq_id);
-      CREATE UNIQUE INDEX IF NOT EXISTS idx_profitability_modality_codigo ON public.profitability_modality(codigo);
     `);
 
     // Apply audit trigger
