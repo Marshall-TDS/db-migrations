@@ -15,6 +15,7 @@ import { addSeqIdToUsers20251210002 } from "./TASK-0025__20251210002-add-seq-id-
 import { createParameterizationTable20251210004 } from "./TASK-0027__20251210004-create-parameterization-table";
 import { createModalidadesRentabilidadeTable20250115001 } from "./TASK-0028__20250115001-create-modalidades-rentabilidade-table";
 import { createCiclosAndUpdateModalidades20251215001 } from "./TASK-0029__20251215001-create-ciclos-and-update-modalidades";
+import { alterFrequenciaPagamentoToInteger20250116001 } from "./TASK-0030__20250116001-alter-frequencia-pagamento-to-integer";
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -32,4 +33,5 @@ export const migrations: Migration[] = [
   createParameterizationTable20251210004,
   createModalidadesRentabilidadeTable20250115001,
   createCiclosAndUpdateModalidades20251215001,
+  alterFrequenciaPagamentoToInteger20250116001,
 ];
