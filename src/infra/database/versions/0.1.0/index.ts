@@ -16,6 +16,7 @@ import { createParameterizationTable20251210004 } from "./TASK-0027__20251210004
 import { createModalidadesRentabilidadeTable20250115001 } from "./TASK-0028__20250115001-create-modalidades-rentabilidade-table";
 import { createCiclosAndUpdateModalidades20251215001 } from "./TASK-0029__20251215001-create-ciclos-and-update-modalidades";
 import { alterFrequenciaPagamentoToInteger20250116001 } from "./TASK-0030__20250116001-alter-frequencia-pagamento-to-integer";
+import { createCustomerDetailsTable20251215002 } from "./TASK-0031__20251215002-create-customer-details-table";
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -34,4 +35,5 @@ export const migrations: Migration[] = [
   createModalidadesRentabilidadeTable20250115001,
   createCiclosAndUpdateModalidades20251215001,
   alterFrequenciaPagamentoToInteger20250116001,
+  createCustomerDetailsTable20251215002
 ];
