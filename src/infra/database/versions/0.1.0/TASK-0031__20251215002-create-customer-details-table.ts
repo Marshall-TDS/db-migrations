@@ -22,10 +22,16 @@ export const createCustomerDetailsTable20251215002: Migration = {
             CREATE UNIQUE INDEX IF NOT EXISTS idx_customer_details_seq_id ON public.customer_details(seq_id);
             CREATE UNIQUE INDEX IF NOT EXISTS idx_customer_details_customer_id ON public.customer_details(customer_id);
 
-            INSERT INTO public.customer_details (customer_id, birth_date, created_by, updated_by)
-            SELECT id, birth_date, created_by, updated_by FROM public.customer;
+            DO $$
+            BEGIN
+                IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'customer' AND column_name = 'birth_date') THEN
+                    INSERT INTO public.customer_details (customer_id, birth_date, created_by, updated_by)
+                    SELECT id, birth_date, created_by, updated_by FROM public.customer
+                    ON CONFLICT (customer_id) DO NOTHING;
 
-            ALTER TABLE public.customer DROP COLUMN IF EXISTS birth_date;
+                    ALTER TABLE public.customer DROP COLUMN birth_date;
+                END IF;
+            END $$;
 
             DROP TRIGGER IF EXISTS trg_audit_log ON public.customer_details;
             CREATE TRIGGER trg_audit_log
