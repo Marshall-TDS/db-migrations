@@ -11,9 +11,9 @@ export const createParameterizationTable20251210004: Migration = {
                 seq_id BIGSERIAL,
                 nome_do_parametro VARCHAR(255) NOT NULL,
                 key VARCHAR(255) NOT NULL,
-                tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('Numero', 'Texto', 'Data', 'Booleano')),
+                tipo VARCHAR(20) NOT NULL CHECK (tipo IN ('Número', 'Texto', 'Data', 'Booleano')),
                 value TEXT NOT NULL,
-                escopo VARCHAR(20) NOT NULL CHECK (escopo IN ('Global', 'Usuario')),
+                escopo VARCHAR(20) NOT NULL CHECK (escopo IN ('Global', 'Usuário')),
                 id_usuario UUID[] NOT NULL DEFAULT '{}',
                 created_by VARCHAR(160) NOT NULL,
                 updated_by VARCHAR(160) NOT NULL,
@@ -39,4 +39,3 @@ export const createParameterizationTable20251210004: Migration = {
         `);
   },
 };
-

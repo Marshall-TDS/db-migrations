@@ -12,11 +12,11 @@ import { fixDocumentFileType20251209002 } from "./TASK-0022__20251209-fix-docume
 import { addDocumentMetadataColumns20251209003 } from "./TASK-0023__20251209-add-doc-metadata";
 import { updateAccessGroupMembershipsId20251210001 } from "./TASK-0024__20251210001-access-group-memberships-id-update";
 import { addSeqIdToUsers20251210002 } from "./TASK-0025__20251210002-add-seq-id-to-users";
-import { createParameterizationTable20251210004 } from "./TASK-0027__20251210004-create-parameterization-table";
 import { createModalidadesRentabilidadeTable20250115001 } from "./TASK-0028__20250115001-create-modalidades-rentabilidade-table";
 import { createCiclosAndUpdateModalidades20251215001 } from "./TASK-0029__20251215001-create-ciclos-and-update-modalidades";
 import { alterFrequenciaPagamentoToInteger20250116001 } from "./TASK-0030__20250116001-alter-frequencia-pagamento-to-integer";
 import { createCustomerDetailsTable20251215002 } from "./TASK-0031__20251215002-create-customer-details-table";
+import { createParameterizationTable20250117001 } from "./TASK-0032__20250117001-create-parameterization-table";
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -31,9 +31,9 @@ export const migrations: Migration[] = [
   addDocumentMetadataColumns20251209003,
   updateAccessGroupMembershipsId20251210001,
   addSeqIdToUsers20251210002,
-  createParameterizationTable20251210004,
   createModalidadesRentabilidadeTable20250115001,
   createCiclosAndUpdateModalidades20251215001,
   alterFrequenciaPagamentoToInteger20250116001,
-  createCustomerDetailsTable20251215002
+  createCustomerDetailsTable20251215002,
+  createParameterizationTable20250117001
 ];
