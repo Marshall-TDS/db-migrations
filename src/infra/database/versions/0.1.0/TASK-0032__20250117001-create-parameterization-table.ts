@@ -6,6 +6,34 @@ export const createParameterizationTable20250117001: Migration = {
   async up({ db }) {
     // Create parameterization table
     await db.execute(`
+      DO $$
+      BEGIN
+        -- Check if 'key' column exists (from TASK-0027) to rename it to 'technical_key'
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parameterization' AND column_name='key') THEN
+            ALTER TABLE public.parameterization RENAME COLUMN "key" TO technical_key;
+        END IF;
+
+        -- Rename other columns if they exist in old format
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parameterization' AND column_name='nome_do_parametro') THEN
+            ALTER TABLE public.parameterization RENAME COLUMN nome_do_parametro TO friendly_name;
+        END IF;
+
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parameterization' AND column_name='tipo') THEN
+            ALTER TABLE public.parameterization RENAME COLUMN tipo TO data_type;
+            -- Drop CHECK constraint if it exists (names vary, but we can try to alter type which might override or we accept legacy checks for now if values compatible)
+            ALTER TABLE public.parameterization ALTER COLUMN data_type TYPE VARCHAR(50); 
+        END IF;
+
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parameterization' AND column_name='escopo') THEN
+            ALTER TABLE public.parameterization RENAME COLUMN escopo TO scope_type;
+             ALTER TABLE public.parameterization ALTER COLUMN scope_type TYPE VARCHAR(50);
+        END IF;
+
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='parameterization' AND column_name='id_usuario') THEN
+            ALTER TABLE public.parameterization RENAME COLUMN id_usuario TO scope_target_id;
+        END IF;
+      END $$;
+
       CREATE TABLE IF NOT EXISTS public.parameterization (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
         seq_id BIGSERIAL,
