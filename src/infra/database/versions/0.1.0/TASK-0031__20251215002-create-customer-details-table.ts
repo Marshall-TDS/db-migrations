@@ -9,6 +9,7 @@ export const createCustomerDetailsTable20251215002: Migration = {
                 id UUID PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
                 seq_id BIGSERIAL,
                 customer_id UUID NOT NULL REFERENCES public.customer(id) ON DELETE CASCADE,
+                birth_date DATE,
                 sex VARCHAR(10) CHECK (sex IN ('Homem', 'Mulher')),
                 marital_status VARCHAR(50) CHECK (marital_status IN ('solteiro(a)', 'casado(a)', 'separado(a) judicialmente', 'divorciado(a)', 'viúvo(a)')),
                 nationality VARCHAR(100) DEFAULT 'Brasileiro',
@@ -21,6 +22,11 @@ export const createCustomerDetailsTable20251215002: Migration = {
             CREATE UNIQUE INDEX IF NOT EXISTS idx_customer_details_seq_id ON public.customer_details(seq_id);
             CREATE UNIQUE INDEX IF NOT EXISTS idx_customer_details_customer_id ON public.customer_details(customer_id);
 
+            INSERT INTO public.customer_details (customer_id, birth_date, created_by, updated_by)
+            SELECT id, birth_date, created_by, updated_by FROM public.customer;
+
+            ALTER TABLE public.customer DROP COLUMN IF EXISTS birth_date;
+
             DROP TRIGGER IF EXISTS trg_audit_log ON public.customer_details;
             CREATE TRIGGER trg_audit_log
             AFTER INSERT OR UPDATE OR DELETE ON public.customer_details
@@ -31,6 +37,13 @@ export const createCustomerDetailsTable20251215002: Migration = {
     },
     async down({ db }) {
         await db.execute(`
+            ALTER TABLE public.customer ADD COLUMN IF NOT EXISTS birth_date DATE;
+
+            UPDATE public.customer c
+            SET birth_date = cd.birth_date
+            FROM public.customer_details cd
+            WHERE c.id = cd.customer_id;
+
             DROP TRIGGER IF EXISTS trg_audit_log ON public.customer_details;
             DROP TABLE IF EXISTS public.customer_details;
         `)
