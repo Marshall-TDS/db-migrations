@@ -19,6 +19,9 @@ import { createCustomerDetailsTable20251215002 } from "./TASK-0031__20251215002-
 import { createParameterizationTable20250117001 } from "./TASK-0032__20250117001-create-parameterization-table";
 import { addEditableToParameterization20250118001 } from "./TASK-0033__20250118001-add-editable-to-parameterization";
 import { updateParameterizationScopeTypeConstraint20250119001 } from "./TASK-0034__20250119001-update-parameterization-scope-type-constraint";
+import { refactorCustomerToPeople20251219001 } from "./TASK-0035__20251219001-refactor-customer-to-people";
+import { removeLastNameFromPeople20251219002 } from "./TASK-0036__20251219002-remove-last-name-from-people";
+import { addNameColumnsToPeopleDetails20251222001 } from "./TASK-0037__20251222001-add-name-columns-to-people-details";
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -39,5 +42,8 @@ export const migrations: Migration[] = [
   createCustomerDetailsTable20251215002,
   createParameterizationTable20250117001,
   addEditableToParameterization20250118001,
-  updateParameterizationScopeTypeConstraint20250119001
+  updateParameterizationScopeTypeConstraint20250119001,
+  refactorCustomerToPeople20251219001,
+  removeLastNameFromPeople20251219002,
+  addNameColumnsToPeopleDetails20251222001
 ];

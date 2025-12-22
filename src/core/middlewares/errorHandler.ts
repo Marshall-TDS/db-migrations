@@ -19,7 +19,10 @@ export const errorHandler = (
 
   return res.status(500).json({
     status: 'error',
-    message: 'Erro interno do servidor',
+    message: err.message || 'Erro interno do servidor',
+    name: err.name,
+    stack: err.stack,
+    ...(err as any),
   })
 }
 
