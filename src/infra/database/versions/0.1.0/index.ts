@@ -22,6 +22,8 @@ import { updateParameterizationScopeTypeConstraint20250119001 } from "./TASK-003
 import { refactorCustomerToPeople20251219001 } from "./TASK-0035__20251219001-refactor-customer-to-people";
 import { removeLastNameFromPeople20251219002 } from "./TASK-0036__20251219002-remove-last-name-from-people";
 import { addNameColumnsToPeopleDetails20251222001 } from "./TASK-0037__20251222001-add-name-columns-to-people-details";
+import { createPeopleRelationshipTables20251222002 } from "./TASK-0038__20251222002-create-people-relationship-tables";
+
 
 export const migrations: Migration[] = [
   setupAuditLog20250101000,
@@ -45,5 +47,7 @@ export const migrations: Migration[] = [
   updateParameterizationScopeTypeConstraint20250119001,
   refactorCustomerToPeople20251219001,
   removeLastNameFromPeople20251219002,
-  addNameColumnsToPeopleDetails20251222001
+  addNameColumnsToPeopleDetails20251222001,
+  createPeopleRelationshipTables20251222002
 ];
+
