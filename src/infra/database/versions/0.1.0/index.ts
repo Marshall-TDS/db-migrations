@@ -23,6 +23,7 @@ import { refactorCustomerToPeople20251219001 } from "./TASK-0035__20251219001-re
 import { removeLastNameFromPeople20251219002 } from "./TASK-0036__20251219002-remove-last-name-from-people";
 import { addNameColumnsToPeopleDetails20251222001 } from "./TASK-0037__20251222001-add-name-columns-to-people-details";
 import { createPeopleRelationshipTables20251222002 } from "./TASK-0038__20251222002-create-people-relationship-tables";
+import { createContractsTemplatesTable20251224001 } from "./TASK-0039__20251224001-create-contracts-templates-table";
 
 
 export const migrations: Migration[] = [
@@ -48,6 +49,7 @@ export const migrations: Migration[] = [
   refactorCustomerToPeople20251219001,
   removeLastNameFromPeople20251219002,
   addNameColumnsToPeopleDetails20251222001,
-  createPeopleRelationshipTables20251222002
+  createPeopleRelationshipTables20251222002,
+  createContractsTemplatesTable20251224001
 ];
 
