@@ -25,6 +25,7 @@ import { addNameColumnsToPeopleDetails20251222001 } from "./TASK-0037__202512220
 import { createPeopleRelationshipTables20251222002 } from "./TASK-0038__20251222002-create-people-relationship-tables";
 import { createContractsTemplatesTable20251224001 } from "./TASK-0039__20251224001-create-contracts-templates-table";
 import { createContractsTables20250125001 } from "./TASK-0040__20250125001-create-contracts-tables";
+import { addConteudoToContracts20250125002 } from "./TASK-0041__20250125002-add-conteudo-to-contracts";
 
 
 export const migrations: Migration[] = [
@@ -52,6 +53,7 @@ export const migrations: Migration[] = [
   addNameColumnsToPeopleDetails20251222001,
   createPeopleRelationshipTables20251222002,
   createContractsTemplatesTable20251224001,
-  createContractsTables20250125001
+  createContractsTables20250125001,
+  addConteudoToContracts20250125002
 ];
 
